@@ -1,0 +1,18 @@
+# DEV environment
+
+This environment is configured for **dev**.
+
+- RDS instance: `db.t4g.micro`
+- Backup retention: `3` days
+- Deletion protection: `false`
+- Multi-AZ: `false`
+- ECS desired count: `1`
+
+Validate with:
+
+```bash
+terraform fmt -recursive
+terraform init -backend=false
+terraform validate
+terraform plan -refresh=false -var-file=terraform.tfvars
+```

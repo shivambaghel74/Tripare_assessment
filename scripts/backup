@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.yml}"
+CONTAINER="${POSTGRES_CONTAINER:-tripare-postgres}"
+DB_USER="${POSTGRES_USER:-bookings}"
+DB_NAME="${POSTGRES_DB:-bookings}"
+BACKUP_DIR="${BACKUP_DIR:-backups}"
+
+mkdir -p "$BACKUP_DIR"
+
+timestamp="$(date -u '+%Y%m%dT%H%M%SZ')"
+backup_file="${BACKUP_DIR}/${DB_NAME}_${timestamp}.dump"
+
+echo "Creating backup: ${backup_file}"
+
+docker compose -f "$COMPOSE_FILE" exec -T "$CONTAINER" \
+  pg_dump -U "$DB_USER" -d "$DB_NAME" -Fc > "$backup_file"
+
+test -s "$backup_file"
+
+echo "Backup completed successfully."
+echo "File: $backup_file"

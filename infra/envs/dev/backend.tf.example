@@ -1,0 +1,10 @@
+# Example remote backend configuration.
+# Copy the values into backend configuration supplied by your organization.
+#
+# terraform init \
+#   -backend-config="bucket=YOUR-TFSTATE-BUCKET" \
+#   -backend-config="key=tripare/" \
+#   -backend-config="region=ap-south-1"
+#
+# Configure state locking according to your Terraform/AWS version and
+# organizational standard.
